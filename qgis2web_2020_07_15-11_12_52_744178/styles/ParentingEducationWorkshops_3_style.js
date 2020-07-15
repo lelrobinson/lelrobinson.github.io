@@ -1,7 +1,7 @@
 var size = 0;
 var placement = 'point';
 
-var style_subway_1 = function(feature, resolution){
+var style_ParentingEducationWorkshops_3 = function(feature, resolution){
     var context = {
         feature: feature,
         variables: {}
@@ -16,12 +16,13 @@ var style_subway_1 = function(feature, resolution){
     var textAlign = "left";
     var offsetX = 8;
     var offsetY = 3;
-    var placement = 'line';
+    var placement = 'point';
     if ("" !== null) {
         labelText = String("");
     }
     var style = [ new ol.style.Style({
-        stroke: new ol.style.Stroke({color: 'rgba(114,155,111,1.0)', lineDash: null, lineCap: 'square', lineJoin: 'bevel', width: 0}),
+        image: new ol.style.Circle({radius: 4.0 + size,
+            stroke: new ol.style.Stroke({color: 'rgba(152,125,183,1.0)', lineDash: null, lineCap: 'butt', lineJoin: 'miter', width: 0}), fill: new ol.style.Fill({color: 'rgba(152,125,183,1.0)'})}),
         text: createTextStyle(feature, resolution, labelText, labelFont,
                               labelFill, placement, bufferColor,
                               bufferWidth)

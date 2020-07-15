@@ -1,7 +1,7 @@
 var size = 0;
 var placement = 'point';
 
-var style_geo_export_75863697e25548ce9a108ee77a009514_0 = function(feature, resolution){
+var style_ExpandedFoodandNutritionEducationWorkshops_2 = function(feature, resolution){
     var context = {
         feature: feature,
         variables: {}
@@ -21,7 +21,8 @@ var style_geo_export_75863697e25548ce9a108ee77a009514_0 = function(feature, reso
         labelText = String("");
     }
     var style = [ new ol.style.Style({
-        stroke: new ol.style.Stroke({color: 'rgba(82,82,82,1.0)', lineDash: null, lineCap: 'butt', lineJoin: 'miter', width: 0}),fill: new ol.style.Fill({color: 'rgba(204,204,204,1.0)'}),
+        image: new ol.style.Circle({radius: 4.0 + size,
+            stroke: new ol.style.Stroke({color: 'rgba(255,127,0,1.0)', lineDash: null, lineCap: 'butt', lineJoin: 'miter', width: 0}), fill: new ol.style.Fill({color: 'rgba(255,127,0,1.0)'})}),
         text: createTextStyle(feature, resolution, labelText, labelFont,
                               labelFill, placement, bufferColor,
                               bufferWidth)
