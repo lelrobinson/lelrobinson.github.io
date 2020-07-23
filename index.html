@@ -90,7 +90,7 @@
 
   var popup = new mapboxgl.Popup({ offset: [0, -15] })
     .setLngLat(feature.geometry.coordinates)
-    .setHTML('<h3>' + feature.properties.address + '</h3><p>' + feature.properties.description + '</p>')
+    .setHTML('<h3>' + feature.properties.program + '</h3><p>' + feature.properties.sitename + '</p>')
     .addTo(map);
 });
 
@@ -107,7 +107,7 @@ var feature = features[0];
 
 var popup = new mapboxgl.Popup({ offset: [0, -15] })
 .setLngLat(feature.geometry.coordinates)
-.setHTML('<h3>' + feature.properties.Project + '</h3><p>' + feature.properties.Street + '</p>')
+.setHTML('<h3>' + feature.properties.program + '</h3><p>' + feature.properties.sitename + '</p>')
 .addTo(map);
 });
 
