@@ -61,7 +61,7 @@ var feature = features[0];
 
 var popup = new mapboxgl.Popup({ offset: [0, -15] })
 .setLngLat(feature.geometry.coordinates)
-.setHTML('<h3>' + feature.properties + '</h3><p>' + feature.properties + '</p>')
+.setHTML('<h3>' + feature.properties.Project + '</h3><p>' + feature.properties.Street + '</p>')
 .addTo(map);
 });
 
