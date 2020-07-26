@@ -129,10 +129,27 @@ var popup = new mapboxgl.Popup({ offset: [0, -15] })
 .addTo(map);
 });
 
+map.on('click', function(e) {
+var features = map.queryRenderedFeatures(e.point, {
+layers: ['hastep'] // replace this with the name of the layer
+});
+
+if (!features.length) {
+return;
+}
+
+var feature = features[0];
+
+var popup = new mapboxgl.Popup({ offset: [0, -15] })
+.setLngLat(feature.geometry.coordinates)
+.setHTML('<h3>' + feature.properties.program + '</h3><p>' + feature.properties.sitename + '</p>')
+.addTo(map);
+});
+
 
 
 // enumerate ids of the layers
-    var toggleableLayerIds = ['parenting', 'efnep', 'fmnp'];
+    var toggleableLayerIds = ['parenting', 'efnep', 'fmnp', 'hastep'];
 
 // set up the corresponding toggle button for each layer
     for (var i = 0; i < toggleableLayerIds.length; i++) {
