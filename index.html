@@ -78,6 +78,8 @@
     });
 
 // code from the next step will go here
+
+
     map.on('click', function(e) {
   var features = map.queryRenderedFeatures(e.point, {
     layers: ['parenting'] // replace this with the name of the layer
@@ -91,7 +93,7 @@
 
   var popup = new mapboxgl.Popup({ offset: [0, -15] })
     .setLngLat(feature.geometry.coordinates)
-    .setHTML('<h3>' + feature.properties.program + '</h3><p>' + feature.properties.sitename + '</p>')
+    .setHTML('<h3>' + feature.properties.project + '</h3><p>' + feature.properties.sitename + '</p>'+ feature.properties.information + '</p>')
     .addTo(map);
 });
 
@@ -108,7 +110,7 @@ var feature = features[0];
 
 var popup = new mapboxgl.Popup({ offset: [0, -15] })
 .setLngLat(feature.geometry.coordinates)
-.setHTML('<h3>' + feature.properties.program + '</h3><p>' + feature.properties.sitename + '</p>')
+.setHTML('<h3>' + feature.properties.program + '</h3><p>' + feature.properties.sitename + '</p>'+ feature.properties.information + '</p>')
 .addTo(map);
 });
 
@@ -125,7 +127,7 @@ var feature = features[0];
 
 var popup = new mapboxgl.Popup({ offset: [0, -15] })
 .setLngLat(feature.geometry.coordinates)
-.setHTML('<h3>' + feature.properties.program + '</h3><p>' + feature.properties.sitename + '</p>')
+.setHTML('<h3>' + feature.properties.project + '</h3><p>' + feature.properties.sitename + '</p>'+ feature.properties.information + '</p>')
 .addTo(map);
 });
 
@@ -142,7 +144,7 @@ var feature = features[0];
 
 var popup = new mapboxgl.Popup({ offset: [0, -15] })
 .setLngLat(feature.geometry.coordinates)
-.setHTML('<h3>' + feature.properties.program + '</h3><p>' + feature.properties.sitename + '</p>')
+.setHTML('<h3>' + feature.properties.program + '</h3><p>' + feature.properties.sitename + '</p>'+ feature.properties.information + '</p>')
 .addTo(map);
 });
 
