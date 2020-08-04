@@ -6,6 +6,14 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+
     <style>
       body {
         margin: 0;
@@ -24,14 +32,14 @@
 
   <body>
     <style>
-          #menu {
+        #menu {
         background-color: #FFF;
         position: absolute;
         z-index: 1;
         top: 10px;
-        right: 10px;
+        right: 120px;
         border-radius: 3px;
-        width: 120px;
+        width: 100px;
         border: 1px solid rgba(0, 0, 0, 0.4);
         font-family: 'Helvetica Neu', sans-serif;
         }
@@ -66,9 +74,18 @@
         background: #3074a4;
         }
       </style>
-    <nav id="menu"></nav>
+
+    <nav id="menu">
+      <select
+        id='layerSelect'
+        class="selectpicker"
+        multiple
+        data-live-search="true">
+      </select>
+    </nav>
     <div id='map'></div>
     <script>
+
     mapboxgl.accessToken = 'pk.eyJ1IjoibGVscm9iaW5zb24xNDMxIiwiYSI6ImNrYnRlMWdtcjA5MWQybnFscXVoNWowczcifQ.FM5LFVr3n-QcDm4_zB2hog'; // replace this with your access token
     var map = new mapboxgl.Map({
       container: 'map',
@@ -148,40 +165,69 @@ var popup = new mapboxgl.Popup({ offset: [0, -15] })
 .addTo(map);
 });
 
-
+      //var selectElem = document.createElement('select');
+      //selectElem.id = 'legend';
 
 // enumerate ids of the layers
     var toggleableLayerIds = ['parenting', 'efnep', 'fmnp', 'hastep'];
 
 // set up the corresponding toggle button for each layer
     for (var i = 0; i < toggleableLayerIds.length; i++) {
-    var id = toggleableLayerIds[i];
+      var id = toggleableLayerIds[i];
 
-    var link = document.createElement('a');
-    link.href = '#';
-    link.className = 'active';
-    link.textContent = id;
+      let dropdownToggle = true;
+      if(dropdownToggle) {
+        var ddlink = document.createElement('option');
+        ddlink.href = '#';
+        //ddlink.className = 'active';
+        ddlink.textContent = id;
 
-    link.onclick = function(e) {
-    var clickedLayer = this.textContent;
-    e.preventDefault();
-    e.stopPropagation();
+        var select = document.getElementById('layerSelect');
+        select.appendChild(ddlink);
+      }
+      else {
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active';
+        link.textContent = id;
 
-    var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+        link.onclick = function(e) {
+          var clickedLayer = this.textContent;
+          e.preventDefault();
+          e.stopPropagation();
 
-    // toggle layer visibility by changing the layout object's visibility property
-    if (visibility === 'visible') {
-    map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-    this.className = '';
-    } else {
-    this.className = 'active';
-    map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+          var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+          // toggle layer visibility by changing the layout object's visibility property
+          if (visibility === 'visible') {
+            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            this.className = '';
+          } else {
+            this.className = 'active';
+            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+          }
+        };
+
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+      }
     }
-    };
 
-    var layers = document.getElementById('menu');
-    layers.appendChild(link);
-    }
+    let dropdownSelector = $('#layerSelect');
+    dropdownSelector.selectpicker();
+    // Pre-select items in the menu. Should be the same as the default layers being shown above *
+    dropdownSelector.selectpicker('selectAll');
+
+    dropdownSelector.on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+
+      var clickedLayer = toggleableLayerIds[clickedIndex];
+      // toggle layer visibility by changing the layout object's visibility property
+      if (isSelected) {
+        map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+      } else {
+        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+      }
+    });
 
 
     </script>
