@@ -96,6 +96,93 @@
 
 map.on('click', function(e) {
 var features = map.queryRenderedFeatures(e.point, {
+layers: ['stsenatedist'] // replace this with the name of the layer
+});
+
+if (!features.length) {
+return;
+}
+
+var feature = features[0];
+
+var popup = new mapboxgl.Popup({ offset: [0, -15] })
+.setLngLat(feature.geometry.coordinates)
+.setHTML('<h3>' + feature.properties.project + '</h3><p>' + feature.properties.sitename + '</p>'+ feature.properties.information + '</p>')
+.addTo(map);
+});
+
+map.on('click', function(e) {
+var features = map.queryRenderedFeatures(e.point, {
+layers: ['borough'] // replace this with the name of the layer
+});
+
+if (!features.length) {
+return;
+}
+
+var feature = features[0];
+
+var popup = new mapboxgl.Popup({ offset: [0, -15] })
+.setLngLat(feature.geometry.coordinates)
+.setHTML('<h3>' + feature.properties.project + '</h3><p>' + feature.properties.sitename + '</p>'+ feature.properties.information + '</p>')
+.addTo(map);
+});
+
+map.on('click', function(e) {
+var features = map.queryRenderedFeatures(e.point, {
+layers: ['stassemblydist'] // replace this with the name of the layer
+});
+
+if (!features.length) {
+return;
+}
+
+var feature = features[0];
+
+var popup = new mapboxgl.Popup({ offset: [0, -15] })
+.setLngLat(feature.geometry.coordinates)
+.setHTML('<h3>' + feature.properties.project + '</h3><p>' + feature.properties.sitename + '</p>'+ feature.properties.information + '</p>')
+.addTo(map);
+});
+
+map.on('click', function(e) {
+var features = map.queryRenderedFeatures(e.point, {
+layers: ['communitydistricts'] // replace this with the name of the layer
+});
+
+if (!features.length) {
+return;
+}
+
+var feature = features[0];
+
+var popup = new mapboxgl.Popup({ offset: [0, -15] })
+.setLngLat(feature.geometry.coordinates)
+.setHTML('<h3>' + feature.properties.project + '</h3><p>' + feature.properties.sitename + '</p>'+ feature.properties.information + '</p>')
+.addTo(map);
+});
+
+map.on('click', function(e) {
+var features = map.queryRenderedFeatures(e.point, {
+layers: ['congdistricts'] // replace this with the name of the layer
+});
+
+if (!features.length) {
+return;
+}
+
+var feature = features[0];
+
+var popup = new mapboxgl.Popup({ offset: [0, -15] })
+.setLngLat(feature.geometry.coordinates)
+.setHTML('<h3>' + feature.properties.project + '</h3><p>' + feature.properties.sitename + '</p>'+ feature.properties.information + '</p>')
+.addTo(map);
+});
+
+
+
+map.on('click', function(e) {
+var features = map.queryRenderedFeatures(e.point, {
 layers: ['urbanfarming'] // replace this with the name of the layer
 });
 
@@ -201,7 +288,7 @@ var popup = new mapboxgl.Popup({ offset: [0, -15] })
     var selectelem = document.createElement("select");
 
 // enumerate ids of the layers
-    var toggleableLayerIds = ['parenting', 'efnep', 'fmnp', 'hastep', 'nh', 'urbanfarming'];
+    var toggleableLayerIds = ['stsenatedist', 'borough', 'stassemblydist', 'communitydistricts', 'congdistricts'];
 
 // set up the corresponding toggle button for each layer
 for (var i = 0; i < toggleableLayerIds.length; i++) {
