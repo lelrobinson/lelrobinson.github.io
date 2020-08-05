@@ -7,12 +7,11 @@
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
     <style>
       body {
@@ -32,14 +31,14 @@
 
   <body>
     <style>
-        #menu {
+          #menu {
         background-color: #FFF;
         position: absolute;
         z-index: 1;
         top: 10px;
-        right: 120px;
+        right: 10px;
         border-radius: 3px;
-        width: 100px;
+        width: 120px;
         border: 1px solid rgba(0, 0, 0, 0.4);
         font-family: 'Helvetica Neu', sans-serif;
         }
@@ -74,18 +73,16 @@
         background: #3074a4;
         }
       </style>
-
-    <nav id="menu">
-      <select
-        id='layerSelect'
-        class="selectpicker"
-        multiple
-        data-live-search="true">
-      </select>
-    </nav>
+    <nav id="menu"></nav>
+    <select
+      id='layerSelect'
+      class="selectpicker"
+      multiple
+      data-live-search="true">
+    </select>
+    
     <div id='map'></div>
     <script>
-
     mapboxgl.accessToken = 'pk.eyJ1IjoibGVscm9iaW5zb24xNDMxIiwiYSI6ImNrYnRlMWdtcjA5MWQybnFscXVoNWowczcifQ.FM5LFVr3n-QcDm4_zB2hog'; // replace this with your access token
     var map = new mapboxgl.Map({
       container: 'map',
@@ -95,7 +92,6 @@
     });
 
 // code from the next step will go here
-
 
     map.on('click', function(e) {
   var features = map.queryRenderedFeatures(e.point, {
@@ -165,8 +161,8 @@ var popup = new mapboxgl.Popup({ offset: [0, -15] })
 .addTo(map);
 });
 
-      //var selectElem = document.createElement('select');
-      //selectElem.id = 'legend';
+
+    var selectelem = document.createElement("select");
 
 // enumerate ids of the layers
     var toggleableLayerIds = ['parenting', 'efnep', 'fmnp', 'hastep'];
@@ -175,61 +171,42 @@ var popup = new mapboxgl.Popup({ offset: [0, -15] })
     for (var i = 0; i < toggleableLayerIds.length; i++) {
       var id = toggleableLayerIds[i];
 
-      let dropdownToggle = true;
-      if(dropdownToggle) {
-        var ddlink = document.createElement('option');
-        ddlink.href = '#';
-        //ddlink.className = 'active';
-        ddlink.textContent = id;
+      var link = document.createElement('a');
+      link.href = '#';
+      link.className = 'active';
+      link.textContent = id;
 
-        var select = document.getElementById('layerSelect');
-        select.appendChild(ddlink);
-      }
-      else {
-        var link = document.createElement('a');
-        link.href = '#';
-        link.className = 'active';
-        link.textContent = id;
+      link.onclick = function(e) {
+        var clickedLayer = this.textContent;
+        e.preventDefault();
+        e.stopPropagation();
 
-        link.onclick = function(e) {
-          var clickedLayer = this.textContent;
-          e.preventDefault();
-          e.stopPropagation();
+        var listitem = document.createElement("option");
 
-          var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
 
-          // toggle layer visibility by changing the layout object's visibility property
-          if (visibility === 'visible') {
-            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-            this.className = '';
-          } else {
-            this.className = 'active';
-            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-          }
-        };
+        // toggle layer visibility by changing the layout object's visibility property
+        if (visibility === 'visible') {
+          map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+          this.className = '';
+        } else {
+          this.className = 'active';
+          map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+        }
+      };
 
-        var layers = document.getElementById('menu');
-        layers.appendChild(link);
-      }
+      var layers = document.getElementById('menu');
+      layers.appendChild(link);
     }
-
-    let dropdownSelector = $('#layerSelect');
-    dropdownSelector.selectpicker();
-    // Pre-select items in the menu. Should be the same as the default layers being shown above *
-    dropdownSelector.selectpicker('selectAll');
-
-    dropdownSelector.on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-
-      var clickedLayer = toggleableLayerIds[clickedIndex];
-      // toggle layer visibility by changing the layout object's visibility property
-      if (isSelected) {
-        map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-      } else {
-        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-      }
-    });
 
 
     </script>
+    <div style="display:block">
+    <select class="active" multiple>
+      <option value="1">A</option>
+        <option value="1">B</option>
+          <option value="1">C</option>
+    </select>
+  </div>
   </body>
 </html>
