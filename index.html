@@ -80,7 +80,7 @@
       multiple
       data-live-search="true">
     </select>
-    
+
     <div id='map'></div>
     <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibGVscm9iaW5zb24xNDMxIiwiYSI6ImNrYnRlMWdtcjA5MWQybnFscXVoNWowczcifQ.FM5LFVr3n-QcDm4_zB2hog'; // replace this with your access token
@@ -168,45 +168,64 @@ var popup = new mapboxgl.Popup({ offset: [0, -15] })
     var toggleableLayerIds = ['parenting', 'efnep', 'fmnp', 'hastep'];
 
 // set up the corresponding toggle button for each layer
-    for (var i = 0; i < toggleableLayerIds.length; i++) {
-      var id = toggleableLayerIds[i];
+for (var i = 0; i < toggleableLayerIds.length; i++) {
+  var id = toggleableLayerIds[i];
 
-      var link = document.createElement('a');
-      link.href = '#';
-      link.className = 'active';
-      link.textContent = id;
+  let dropdownToggle = true;
+  if(dropdownToggle) {
+    var ddlink = document.createElement('option');
+    ddlink.href = '#';
+    //ddlink.className = 'active';
+    ddlink.textContent = id;
 
-      link.onclick = function(e) {
-        var clickedLayer = this.textContent;
-        e.preventDefault();
-        e.stopPropagation();
+    var select = document.getElementById('layerSelect');
+    select.appendChild(ddlink);
+  }
+  else {
+    var link = document.createElement('a');
+    link.href = '#';
+    link.className = 'active';
+    link.textContent = id;
 
-        var listitem = document.createElement("option");
+    link.onclick = function(e) {
+      var clickedLayer = this.textContent;
+      e.preventDefault();
+      e.stopPropagation();
 
-        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+      var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
 
-        // toggle layer visibility by changing the layout object's visibility property
-        if (visibility === 'visible') {
-          map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-          this.className = '';
-        } else {
-          this.className = 'active';
-          map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-        }
-      };
+      // toggle layer visibility by changing the layout object's visibility property
+      if (visibility === 'visible') {
+        map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+        this.className = '';
+      } else {
+        this.className = 'active';
+        map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+      }
+    };
 
-      var layers = document.getElementById('menu');
-      layers.appendChild(link);
-    }
+    var layers = document.getElementById('menu');
+    layers.appendChild(link);
+  }
+}
+
+let dropdownSelector = $('#layerSelect');
+dropdownSelector.selectpicker();
+// Pre-select items in the menu. Should be the same as the default layers being shown above *
+dropdownSelector.selectpicker('selectAll');
+
+dropdownSelector.on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+
+  var clickedLayer = toggleableLayerIds[clickedIndex];
+  // toggle layer visibility by changing the layout object's visibility property
+  if (isSelected) {
+    map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+  } else {
+    map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+  }
+});
 
 
-    </script>
-    <div style="display:block">
-    <select class="active" multiple>
-      <option value="1">A</option>
-        <option value="1">B</option>
-          <option value="1">C</option>
-    </select>
-  </div>
-  </body>
+</script>
+</body>
 </html>
